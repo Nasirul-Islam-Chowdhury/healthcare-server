@@ -35,7 +35,7 @@ const getAllFromDB = async (params: any, options: any) => {
         isDeleted: false
     })
 
-    //console.dir(andCondions, { depth: 'inifinity' })
+    console.dir(andCondions, { depth: 'inifinity' })
     const whereConditons: Prisma.AdminWhereInput = { AND: andCondions }
 
     const result = await prisma.admin.findMany({
