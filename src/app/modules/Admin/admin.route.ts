@@ -1,9 +1,10 @@
 import express from 'express';
 import { AdminController } from './admin.controller';
+import auth from '../../middlewares/auth';
 
 const router = express.Router();
 
-router.get('/', AdminController.getAllFromDB);
+router.get('/', auth("ADMIN"), AdminController.getAllFromDB);
 
 router.get('/:id', AdminController.getByIdFromDB);
 
