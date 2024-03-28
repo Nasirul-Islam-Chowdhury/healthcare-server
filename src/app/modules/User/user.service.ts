@@ -6,14 +6,14 @@ import { fileUploader } from "../../../helpers/uploadImage";
 const createAdmin = async (req: any) => {
 
   if (req.file) {
-    const profilePhoto = await fileUploader.uploadToCloudinary(req.file);
-    req.body.admin.profilePhoto = profilePhoto;
+    const photo = await fileUploader.uploadToCloudinary(req.file) as {secure_url:string};
+    req.body.admin.profilePhoto = photo.secure_url;
   }
-
-  const hashedPassword: string = await bcrypt.hash(req.body.data.password, 12);
+  console.log(req.body);
+  const hashedPassword: string = await bcrypt.hash(req.body.password, 12);
 
   const userData = {
-    email: req.body.data.admin.email,
+    email: req.body.admin.email,
     password: hashedPassword,
     role: UserRole.ADMIN,
   };
