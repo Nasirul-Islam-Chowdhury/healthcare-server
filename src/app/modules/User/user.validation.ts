@@ -77,9 +77,12 @@ const updateStatus = z.object({
     })
 })
 
+
+
+
 export const userValidation = {
     createAdmin,
     createDoctor,
     createPatient,
-    updateStatus
+    updateStatus,
 }
