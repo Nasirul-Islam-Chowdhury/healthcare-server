@@ -36,7 +36,6 @@ const createAdmin = async (req: Request) => {
   return result;
 };
 
-
 const createDoctor = async (req: Request): Promise<Doctor> => {
 
     const file = req.file as IFile;
@@ -100,7 +99,6 @@ const createPatient = async (req: Request): Promise<Patient> => {
     return result;
 };
 
-
 const changeProfileStatus = async (id: string, status: UserRole) => {
   const userData = await prisma.user.findUniqueOrThrow({
       where: {
@@ -117,7 +115,6 @@ const changeProfileStatus = async (id: string, status: UserRole) => {
 
   return updateUserStatus;
 };
-
 
 const getMyProfile = async (user: IAuthUser) => {
 
@@ -168,7 +165,6 @@ const getMyProfile = async (user: IAuthUser) => {
 
   return { ...userInfo, ...profileInfo };
 };
-
 
 const updateMyProfie = async (user: IAuthUser, req: Request) => {
     const userInfo = await prisma.user.findUniqueOrThrow({
