@@ -59,7 +59,7 @@ const getAllFromDB = async (
 
     const whereConditions: Prisma.DoctorWhereInput =
         andConditions.length > 0 ? { AND: andConditions } : {};
-
+    console.log(andConditions)
     const result = await prisma.doctor.findMany({
         where: whereConditions,
         skip,
