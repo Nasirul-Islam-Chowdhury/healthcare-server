@@ -3,13 +3,15 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
-import { ScheduleServices } from './schedule.service';
+import { scheduleFilterableFields } from './schedule.constant';
+import { IAuthUser } from '../../interfaces/common';
+import { ScheduleService } from './schedule.service';
 
 
 
 const insertIntoDb = catchAsync(async (req: Request, res: Response) => {
 
-  const result = await ScheduleServices.insertIntoDb(req.body);
+  const result = await ScheduleService.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -19,9 +21,46 @@ const insertIntoDb = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const getAllFromDB = catchAsync(async (req: Request & {user?: IAuthUser}, res: Response) => {
+  const filters = pick(req.query, scheduleFilterableFields);
+  const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
+  const user = req.user;
+  const result = await ScheduleService.getAllFromDB(filters, options, user);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Schedule retrieval successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
 
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await ScheduleService.getByIdFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Schedule retrieval successfully',
+    data: result,
+  });
+});
+
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await ScheduleService.deleteFromDB(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Schedule deleted successfully',
+    data: result,
+  });
+});
 
 export const ScheduleController = {
   insertIntoDb,
+  deleteFromDB,
+  getByIdFromDB,
+  getAllFromDB
 
 };
