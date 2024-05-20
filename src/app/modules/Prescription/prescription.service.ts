@@ -71,7 +71,7 @@ const patientPrescription = async (user: IAuthUser, options: IPaginationOptions)
 
     return {
         meta: {
-            total,
+            total, 
             page,
             limit
         },
