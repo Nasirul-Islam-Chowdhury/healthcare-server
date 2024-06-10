@@ -30,7 +30,7 @@ const getAllFromDB = async (
 
     if (specialties && specialties.length > 0) {
         andConditions.push({
-            doctorSpecialities: {
+            doctorSpecialties: {
                 some: {
                     specialities: {
                         title: {
@@ -68,7 +68,7 @@ const getAllFromDB = async (
             ? { [options.sortBy]: options.sortOrder }
             : { createdAt: 'desc' },
         include: {
-            doctorSpecialities: {
+            doctorSpecialties: {
                 include: {
                     specialities: true
                 }
@@ -97,7 +97,7 @@ const getByIdFromDB = async (id: string): Promise<Doctor | null> => {
             isDeleted: false,
         },
         include: {
-            doctorSpecialities: {
+            doctorSpecialties: {
                 include: {
                     specialities: true
                 }
@@ -129,7 +129,7 @@ const updateIntoDB = async (id: string, payload: IDoctorUpdate) => {
             const deleteSpecialtiesIds = specialties.filter(specialty => specialty.isDeleted);
             //console.log(deleteSpecialtiesIds)
             for (const specialty of deleteSpecialtiesIds) {
-                await transactionClient.doctorSpecialities.deleteMany({
+                await transactionClient.doctorSpecialties.deleteMany({
                     where: {
                         doctorId: doctorInfo.id,
                         specialitiesId: specialty.specialtiesId
@@ -141,7 +141,7 @@ const updateIntoDB = async (id: string, payload: IDoctorUpdate) => {
             const createSpecialtiesIds = specialties.filter(specialty => !specialty.isDeleted);
             console.log(createSpecialtiesIds)
             for (const specialty of createSpecialtiesIds) {
-                await transactionClient.doctorSpecialities.create({
+                await transactionClient.doctorSpecialties.create({
                     data: {
                         doctorId: doctorInfo.id,
                         specialitiesId: specialty.specialtiesId
@@ -156,7 +156,7 @@ const updateIntoDB = async (id: string, payload: IDoctorUpdate) => {
             id: doctorInfo.id
         },
         include: {
-            doctorSpecialities: {
+            doctorSpecialties: {
                 include: {
                     specialities: true
                 }
